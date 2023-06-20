@@ -37,7 +37,7 @@ func GetCityLocation(c *gin.Context) {
 	cityName := c.Param("city")
 	var requestedCity CityDetails
 
-	clientOptions := options.Client().ApplyURI("mongodb+srv://saisudan:UByiZk8rBqcv9VGt@cluster0.91d0ziu.mongodb.net/test")
+	clientOptions := options.Client().ApplyURI( /*mongodb connection string*/ )
 
 	// Connect MongoDB
 	client, err := mongo.Connect(ctx, clientOptions)
