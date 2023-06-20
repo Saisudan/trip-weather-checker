@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -14,6 +15,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 
 	"github.com/gin-gonic/gin"
+
+	"html/template"
+
+	"github.com/go-martini/martini"
 )
 
 var CityLocation [2]string
@@ -32,7 +37,7 @@ func GetCityLocation(c *gin.Context) {
 	cityName := c.Param("city")
 	var requestedCity CityDetails
 
-	clientOptions := options.Client().ApplyURI("query mongodb here")
+	clientOptions := options.Client().ApplyURI("mongodb+srv://saisudan:UByiZk8rBqcv9VGt@cluster0.91d0ziu.mongodb.net/test")
 
 	// Connect MongoDB
 	client, err := mongo.Connect(ctx, clientOptions)
@@ -58,6 +63,7 @@ func GetCityLocation(c *gin.Context) {
 	CityLocation[0] = strconv.FormatFloat(requestedCity.Latitude, 'g', 5, 32)
 	CityLocation[1] = strconv.FormatFloat(requestedCity.Longitude, 'g', 5, 32)
 	var outputstr [][]string = GetTemp()
+	fmt.Println(outputstr)
 	c.IndentedJSON(http.StatusOK, outputstr)
 }
 
@@ -204,4 +210,19 @@ func CreatePage() {
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	//w.Write([]byte("<h1>Hello World!</h1>"))
 
+}
+
+func MartiniPage() {
+	m := martini.Classic()
+	m.Post("/", func(res http.ResponseWriter, req *http.Request) { // res and req are injected by Martini
+		t, _ := template.ParseFiles("form.gtpl")
+		t.Execute(res, nil)
+	})
+
+	m.Post("/results", func(r *http.Request) string {
+		//text := r.FormValue("text")
+		text := r.FormValue("userinput")
+		return text
+	})
+	m.Run()
 }

@@ -4,7 +4,7 @@
 <div><input type="submit" value="Save"></div>
 </form>-->
 
-<form action="" id="cityform">
+<form action="/results" id="cityform">
     <div><h4>Enter a city name</h4></div>
     <div><input type="text" class="form-control" id="userinput" placeholder="City Name"></input></div>
     <button type="submit">Submit</button>

@@ -18,9 +18,15 @@ func main() {
 	//bson.D{{"city_ascii", "Mississauga"}}
 
 	//http.HandleFunc("/view/", server.MakeHandler(server.ViewHandler))
-	server.CreatePage()
 
-	router.Run("localhost:8080")
+	/*
+		server.CreatePage() //return value somehow
+
+	//*/
+
+	//server.CreatePage()
+	//server.MartiniPage()
+	router.Run("localhost:3000")
 	//*/
 	//getTemp()
 }
